@@ -83,11 +83,7 @@ Train reader models on a larger SQuAD v2 subset:
 TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 python3 src/train_reader.py --subset-fraction 0.05 --model-kind all
 ```
 
-```bash
-TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 python3 src/train_reader.py --subset-fraction 0.10 --model-kind all
-```
-
-The 5% run writes to `outputs/reader_5pct_outputs/`; the 10% run writes to `outputs/reader_10pct_outputs/`. On a local Mac, these are long training jobs. A 5% baseline run was estimated at over an hour for one model, so running the full 5% and 10% comparison is better on Colab or another GPU environment.
+The 5% run writes to `outputs/reader_5pct_outputs/`. On a local Mac, these are long training jobs: the 5% baseline run took about 58 minutes, and the 5% BERT + DrQA attention run took about 80 minutes.
 
 Build the fair SQuAD evaluation index:
 
@@ -112,6 +108,17 @@ These results use `rajpurkar/squad_v2`, the first 500 unique validation contexts
 
 The baseline is slightly stronger in this small run, mainly because it predicts no-answer cases more accurately.
 
+### 5% Reader Training Results
+
+These results train directly on a 5% SQuAD v2 training subset and evaluate on the configured SQuAD v2 validation subset.
+
+| Reader | Train Examples | Validation Examples | EM | F1 | Answerability Accuracy | Answerability F1 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| BERT baseline | 6515 | 593 | 52.95 | 55.16 | 61.38 | 59.18 |
+| BERT + DrQA attention | 6515 | 593 | 52.95 | 56.03 | 62.39 | 62.52 |
+
+The attention model is slightly better on F1 and answerability recall/F1 in this 5% run, while exact match is tied.
+
 ## Large Local Files
 
-The trained checkpoint weights and optimizer states are kept locally under `outputs/reader_1pct_outputs/`, but are excluded from GitHub because they are larger than GitHub's regular file limits.
+The trained checkpoint weights are kept locally under `outputs/reader_*_outputs/`, but are excluded from GitHub because they are larger than GitHub's regular file limits. The committed output files are the lightweight configs and result JSON files.
