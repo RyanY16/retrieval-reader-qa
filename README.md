@@ -30,6 +30,15 @@ This repository contains a small question-answering pipeline built around:
 - `outputs/reader_1pct_outputs/` contains Hugging Face Trainer metadata for BERT baseline and DrQA-attention reader runs. Large weight and optimizer files are intentionally ignored by git.
 - `reports/figures/reader_results.png` is the saved experiment result figure.
 
+## Experiment Methodology
+
+The project separates question answering into two stages:
+
+1. Retrieval: passages are embedded with SentenceTransformers and indexed with FAISS. At query time, `src/document_retriever.py` embeds the question and searches `data/processed/passage_index.faiss`, using `data/processed/passages_metadata.pkl` to map retrieved ids back to passage titles and text.
+2. Reading: the reader experiments use SQuAD v2 examples where the model receives a question and passage/context, then predicts an answer span or no-answer. `notebooks/reader_smoke_test.ipynb` verifies the full training/evaluation path on a tiny subset before running the larger setup in `notebooks/reader_1pct_experiment.ipynb`.
+
+The 1% experiment compares a BERT baseline reader with a BERT reader variant that adds DrQA-style attention. Training metadata and checkpoint configuration files are saved under `outputs/reader_1pct_outputs/`, while the resulting plot is stored at `reports/figures/reader_results.png`.
+
 ## Usage
 
 Install dependencies:
