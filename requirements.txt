@@ -1,0 +1,9 @@
+accelerate
+datasets
+evaluate
+faiss-cpu
+numpy
+pandas
+sentence-transformers
+torch
+transformers

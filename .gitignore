@@ -3,5 +3,7 @@ __pycache__/
 .ipynb_checkpoints/
 
 # Hugging Face trainer checkpoints that are too large for regular GitHub.
+outputs/reader_*_outputs/**/model.safetensors
+outputs/reader_*_outputs/**/optimizer.pt
 reader_*_outputs/**/model.safetensors
 reader_*_outputs/**/optimizer.pt
