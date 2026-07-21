@@ -77,6 +77,18 @@ Run a small end-to-end evaluation:
 python3 src/qa_pipeline.py --evaluate --top-k 5 --sample-size 100
 ```
 
+Train reader models on a larger SQuAD v2 subset:
+
+```bash
+TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 python3 src/train_reader.py --subset-fraction 0.05 --model-kind all
+```
+
+```bash
+TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 python3 src/train_reader.py --subset-fraction 0.10 --model-kind all
+```
+
+The 5% run writes to `outputs/reader_5pct_outputs/`; the 10% run writes to `outputs/reader_10pct_outputs/`. On a local Mac, these are long training jobs. A 5% baseline run was estimated at over an hour for one model, so running the full 5% and 10% comparison is better on Colab or another GPU environment.
+
 Build the fair SQuAD evaluation index:
 
 ```bash
