@@ -22,6 +22,8 @@ This repository contains a small question-answering pipeline built around:
 ## File Map
 
 - `src/document_retriever.py` loads the local FAISS passage index and passage metadata, embeds questions with `sentence-transformers/all-MiniLM-L6-v2`, and returns the top-k matching passages.
+- `src/reader.py` contains the BERT extractive reader code, including the baseline reader loader and the DrQA-style attention reader class used in the notebooks.
+- `src/qa_pipeline.py` connects retrieval and reading: it searches for relevant passages, sends those passages to the reader, and returns the best extracted answer.
 - `data/processed/passage_index.faiss` is the FAISS nearest-neighbor index for passage search.
 - `data/processed/passage_embeddings.npy` stores the passage embedding matrix used to build or inspect the index.
 - `data/processed/passages_metadata.pkl` stores passage texts and titles aligned with FAISS index ids.
@@ -39,6 +41,8 @@ The project separates question answering into two stages:
 
 The 1% experiment compares a BERT baseline reader with a BERT reader variant that adds DrQA-style attention. Training metadata and checkpoint configuration files are saved under `outputs/reader_1pct_outputs/`, while the resulting plot is stored at `reports/figures/reader_results.png`.
 
+The end-to-end implementation is in `src/qa_pipeline.py`: it takes a question, retrieves the most relevant passages from the FAISS index, runs the BERT reader over those passages, and returns either the best answer span or no answer.
+
 ## Usage
 
 Install dependencies:
@@ -53,10 +57,22 @@ Retrieve passages:
 python3 src/document_retriever.py "What is Atlantic City known for?"
 ```
 
+Run the full retrieval + reader pipeline:
+
+```bash
+python3 src/qa_pipeline.py "What is Atlantic City known for?" --top-k 5
+```
+
 Run a small retrieval evaluation:
 
 ```bash
 python3 src/document_retriever.py --evaluate --k 5 --sample-size 100
+```
+
+Run a small end-to-end evaluation:
+
+```bash
+python3 src/qa_pipeline.py --evaluate --top-k 5 --sample-size 100
 ```
 
 ## Large Local Files

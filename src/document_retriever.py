@@ -8,9 +8,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-import faiss
-from sentence_transformers import SentenceTransformer
-
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_DATA_DIR = PROJECT_ROOT / "data" / "processed"
 DEFAULT_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
@@ -20,7 +17,7 @@ DEFAULT_MODEL_NAME = "sentence-transformers/all-MiniLM-L6-v2"
 class DocumentRetriever:
     """Encodes questions and searches a prebuilt FAISS passage index."""
 
-    encoder: SentenceTransformer
+    encoder: Any
     index: Any
     passages: list[str]
     passage_titles: list[str]
@@ -38,6 +35,9 @@ class DocumentRetriever:
             raise FileNotFoundError(f"Missing FAISS index: {index_path}")
         if not metadata_path.exists():
             raise FileNotFoundError(f"Missing passage metadata: {metadata_path}")
+
+        import faiss
+        from sentence_transformers import SentenceTransformer
 
         encoder = SentenceTransformer(model_name)
         index = faiss.read_index(str(index_path))
