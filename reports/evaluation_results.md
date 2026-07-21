@@ -1,0 +1,16 @@
+# Evaluation Results
+
+Evaluation setup:
+
+- Dataset: `rajpurkar/squad_v2`
+- Retrieval collection: first 500 unique validation contexts
+- Evaluation sample: first 100 validation questions
+- Retrieval: SentenceTransformers + FAISS, top 5 passages
+- Readers: BERT baseline and BERT + DrQA-style attention
+
+| Reader | Retrieval Recall@5 | End-to-End EM | End-to-End F1 | No-Answer Accuracy |
+| --- | ---: | ---: | ---: | ---: |
+| BERT baseline | 0.8667 (39/45) | 0.5100 | 0.5100 | 0.8909 (49/55) |
+| BERT + DrQA attention | 0.8667 (39/45) | 0.5000 | 0.5050 | 0.7818 (43/55) |
+
+The retriever finds an answer-containing passage for most answerable questions in the sample. The baseline reader is slightly stronger overall in this run because it handles no-answer examples better.

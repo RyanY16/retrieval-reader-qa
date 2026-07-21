@@ -43,6 +43,8 @@ The 1% experiment compares a BERT baseline reader with a BERT reader variant tha
 
 The end-to-end implementation is in `src/qa_pipeline.py`: it takes a question, retrieves the most relevant passages from the FAISS index, runs the BERT reader over those passages, and returns either the best answer span or no answer.
 
+For the fair project evaluation, the retrieval index should be built from the same SQuAD split being tested. `src/build_squad_index.py` creates a 500-context SQuAD v2 validation index, and `src/evaluate_pipeline.py` tests retrieval recall plus end-to-end answer quality on questions from that same split.
+
 ## Usage
 
 Install dependencies:
@@ -74,6 +76,29 @@ Run a small end-to-end evaluation:
 ```bash
 python3 src/qa_pipeline.py --evaluate --top-k 5 --sample-size 100
 ```
+
+Build the fair SQuAD evaluation index:
+
+```bash
+python3 src/build_squad_index.py --max-documents 500
+```
+
+Evaluate retrieval and answer extraction on that matching SQuAD index:
+
+```bash
+TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 python3 src/evaluate_pipeline.py --sample-size 100 --top-k 5
+```
+
+## Current Results
+
+These results use `rajpurkar/squad_v2`, the first 500 unique validation contexts as the retrieval collection, and the first 100 validation questions for evaluation.
+
+| Reader | Retrieval Recall@5 | End-to-End EM | End-to-End F1 | No-Answer Accuracy |
+| --- | ---: | ---: | ---: | ---: |
+| BERT baseline | 0.8667 | 0.5100 | 0.5100 | 0.8909 |
+| BERT + DrQA attention | 0.8667 | 0.5000 | 0.5050 | 0.7818 |
+
+The baseline is slightly stronger in this small run, mainly because it predicts no-answer cases more accurately.
 
 ## Large Local Files
 

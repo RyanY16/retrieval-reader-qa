@@ -21,6 +21,7 @@ class DocumentRetriever:
     index: Any
     passages: list[str]
     passage_titles: list[str]
+    normalize_embeddings: bool = True
 
     @classmethod
     def from_artifacts(
@@ -52,7 +53,11 @@ class DocumentRetriever:
         )
 
     def retrieve(self, question: str, k: int = 5) -> list[dict[str, Any]]:
-        q_vector = self.encoder.encode([question], convert_to_numpy=True)
+        q_vector = self.encoder.encode(
+            [question],
+            convert_to_numpy=True,
+            normalize_embeddings=self.normalize_embeddings,
+        )
         scores, indices = self.index.search(q_vector, k)
 
         return [
