@@ -3,7 +3,7 @@
 This repository contains a small question-answering pipeline built around:
 
 - passage retrieval with SentenceTransformers embeddings and a FAISS index
-- BERT reader experiments on SQuAD v2
+- BERT reader experiments on SQuAD 1.1 and SQuAD v2
 - saved experiment metadata and result artifacts
 
 ## Project Structure
@@ -85,6 +85,16 @@ TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_
 
 The 5% run writes to `outputs/reader_5pct_outputs/`. On a local Mac, these are long training jobs: the 5% baseline run took about 58 minutes, and the 5% BERT + DrQA attention run took about 80 minutes.
 
+Train reader models on SQuAD 1.1 without saving large model weights:
+
+```bash
+TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 python3 src/train_reader.py --dataset squad_v1 --subset-fraction 0.01 --model-kind all --skip-save-model
+```
+
+```bash
+TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 python3 src/train_reader.py --dataset squad_v1 --subset-fraction 0.05 --model-kind all --skip-save-model
+```
+
 Build the fair SQuAD evaluation index:
 
 ```bash
@@ -118,6 +128,19 @@ These results train directly on a 5% SQuAD v2 training subset and evaluate on th
 | BERT + DrQA attention | 6515 | 593 | 52.95 | 56.03 | 62.39 | 62.52 |
 
 The attention model is slightly better on F1 and answerability recall/F1 in this 5% run, while exact match is tied.
+
+### SQuAD 1.1 Reader Training Results
+
+SQuAD 1.1 has answerable questions only, so these runs report EM and F1 but no no-answer metrics.
+
+| Training Size | Reader | Train Examples | Validation Examples | EM | F1 |
+| --- | --- | ---: | ---: | ---: | ---: |
+| 1% | BERT baseline | 875 | 105 | 40.00 | 49.70 |
+| 1% | BERT + DrQA attention | 875 | 105 | 32.38 | 48.15 |
+| 5% | BERT baseline | 4379 | 528 | 60.80 | 72.98 |
+| 5% | BERT + DrQA attention | 4379 | 528 | 64.02 | 75.40 |
+
+The 1% SQuAD 1.1 run favors the baseline on exact match, while the 5% run favors the attention reader on both EM and F1.
 
 ## Large Local Files
 

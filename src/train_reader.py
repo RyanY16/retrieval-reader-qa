@@ -1,4 +1,4 @@
-"""Train BERT reader variants on a SQuAD v2 subset."""
+"""Train BERT reader variants on a SQuAD subset."""
 
 from __future__ import annotations
 
@@ -40,8 +40,14 @@ def add_reader_passages(batch):
     return {"passage": batch["context"]}
 
 
-def prepare_datasets(subset_fraction: float):
-    raw_squad = load_dataset("rajpurkar/squad_v2")
+DATASETS = {
+    "squad_v1": "rajpurkar/squad",
+    "squad_v2": "rajpurkar/squad_v2",
+}
+
+
+def prepare_datasets(subset_fraction: float, dataset_name: str):
+    raw_squad = load_dataset(DATASETS[dataset_name])
     train_count = int(len(raw_squad["train"]) * subset_fraction)
     validation_count = int(len(raw_squad["validation"]) * subset_fraction)
 
@@ -164,7 +170,7 @@ def build_feature_preparers(tokenizer):
     return prepare_train_features, prepare_validation_features
 
 
-def postprocess_qa_predictions(examples, features, raw_predictions, n_best_size=20, max_answer_length=30):
+def postprocess_qa_predictions(examples, features, raw_predictions, has_unanswerable: bool, n_best_size=20, max_answer_length=30):
     all_start_logits, all_end_logits = raw_predictions
     example_id_to_index = {k: i for i, k in enumerate(examples["id"])}
     features_per_example = collections.defaultdict(list)
@@ -203,12 +209,17 @@ def postprocess_qa_predictions(examples, features, raw_predictions, n_best_size=
                     })
 
         best_answer = max(valid_answers, key=lambda x: x["score"]) if valid_answers else {"text": "", "score": 0.0}
-        predictions[example["id"]] = "" if min_null_score is not None and min_null_score > best_answer["score"] else best_answer["text"]
+        if has_unanswerable and min_null_score is not None and min_null_score > best_answer["score"]:
+            predictions[example["id"]] = ""
+        else:
+            predictions[example["id"]] = best_answer["text"]
 
-    formatted_predictions = [
-        {"id": example_id, "prediction_text": text, "no_answer_probability": float(text == "")}
-        for example_id, text in predictions.items()
-    ]
+    formatted_predictions = []
+    for example_id, text in predictions.items():
+        prediction = {"id": example_id, "prediction_text": text}
+        if has_unanswerable:
+            prediction["no_answer_probability"] = float(text == "")
+        formatted_predictions.append(prediction)
     references = [{"id": ex["id"], "answers": ex["answers"]} for ex in examples]
     return formatted_predictions, references
 
@@ -249,6 +260,15 @@ def compute_squad_v2_metrics(predictions, references):
         "answerability_precision": answerability_precision,
         "answerability_recall": answerability_recall,
         "answerability_f1": answerability_f1,
+    }
+
+
+def compute_squad_v1_metrics(predictions, references):
+    squad_metric = evaluate.load("squad")
+    overall = squad_metric.compute(predictions=predictions, references=references)
+    return {
+        "overall_em": overall.get("exact_match", 0.0),
+        "overall_f1": overall.get("f1", 0.0),
     }
 
 
@@ -294,17 +314,29 @@ def train_one_model(model_kind: str, data, train_features, validation_features, 
     start = time.perf_counter()
     trainer.train()
     train_time_sec = time.perf_counter() - start
-    trainer.save_model(str(model_output_dir / "final"))
+    if not args.skip_save_model:
+        trainer.save_model(str(model_output_dir / "final"))
 
     start = time.perf_counter()
     raw_predictions = trainer.predict(eval_dataset).predictions
     inference_time_sec = time.perf_counter() - start
 
-    predictions, references = postprocess_qa_predictions(data["validation"], validation_features, raw_predictions)
-    metrics = compute_squad_v2_metrics(predictions, references)
+    has_unanswerable = args.dataset == "squad_v2"
+    predictions, references = postprocess_qa_predictions(
+        data["validation"],
+        validation_features,
+        raw_predictions,
+        has_unanswerable=has_unanswerable,
+    )
+    metrics = (
+        compute_squad_v2_metrics(predictions, references)
+        if has_unanswerable
+        else compute_squad_v1_metrics(predictions, references)
+    )
 
     result = {
         "model": model_kind,
+        "dataset": args.dataset,
         "subset_fraction": args.subset_fraction,
         "train_examples": len(data["train"]),
         "validation_examples": len(data["validation"]),
@@ -319,10 +351,12 @@ def train_one_model(model_kind: str, data, train_features, validation_features, 
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Train BERT reader variants on SQuAD v2.")
+    parser = argparse.ArgumentParser(description="Train BERT reader variants on a SQuAD subset.")
+    parser.add_argument("--dataset", choices=sorted(DATASETS), default="squad_v2")
     parser.add_argument("--subset-fraction", type=float, required=True)
     parser.add_argument("--output-dir", type=Path)
     parser.add_argument("--model-kind", choices=["bert_baseline", "bert_drqa_attention", "all"], default="all")
+    parser.add_argument("--skip-save-model", action="store_true", help="Write metrics without saving final model weights.")
     parser.add_argument("--epochs", type=float, default=2)
     parser.add_argument("--train-batch-size", type=int, default=8)
     parser.add_argument("--eval-batch-size", type=int, default=16)
@@ -334,11 +368,12 @@ def main() -> None:
 
     set_seed(SEED)
     pct = int(args.subset_fraction * 100)
-    output_dir = args.output_dir or PROJECT_ROOT / "outputs" / f"reader_{pct}pct_outputs"
+    dataset_tag = "" if args.dataset == "squad_v2" else f"{args.dataset}_"
+    output_dir = args.output_dir or PROJECT_ROOT / "outputs" / f"reader_{dataset_tag}{pct}pct_outputs"
     output_dir.mkdir(parents=True, exist_ok=True)
 
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, use_fast=True)
-    data = prepare_datasets(args.subset_fraction)
+    data = prepare_datasets(args.subset_fraction, args.dataset)
     prepare_train_features, prepare_validation_features = build_feature_preparers(tokenizer)
     train_features = data["train"].map(
         prepare_train_features,

@@ -30,3 +30,22 @@ Setup:
 | BERT + DrQA attention | 6515 | 593 | 52.95 | 56.03 | 62.39 | 65.49 | 62.52 |
 
 The 5% run gives the attention reader a small F1 and answerability-F1 edge, with exact match tied.
+
+## SQuAD 1.1 Reader Training Results
+
+Setup:
+
+- Dataset: `rajpurkar/squad`
+- Training subsets: 1% and 5% of SQuAD 1.1 training examples
+- Validation subsets: matching percentages of SQuAD 1.1 validation examples
+- Readers: BERT baseline and BERT + DrQA-style attention
+- Metrics: EM and F1 only, because SQuAD 1.1 does not include no-answer questions
+
+| Training Size | Reader | Train Examples | Validation Examples | EM | F1 |
+| --- | --- | ---: | ---: | ---: | ---: |
+| 1% | BERT baseline | 875 | 105 | 40.00 | 49.70 |
+| 1% | BERT + DrQA attention | 875 | 105 | 32.38 | 48.15 |
+| 5% | BERT baseline | 4379 | 528 | 60.80 | 72.98 |
+| 5% | BERT + DrQA attention | 4379 | 528 | 64.02 | 75.40 |
+
+The 5% SQuAD 1.1 run is much stronger than 1%, and the attention reader is best at 5%.
