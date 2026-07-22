@@ -109,6 +109,8 @@ TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_
 
 ## Current Results
 
+All reader-only SQuAD results are saved in `reports/all_reader_results.md`.
+
 These results use `rajpurkar/squad_v2`, the first 500 unique validation contexts as the retrieval collection, and the first 100 validation questions for evaluation.
 
 | Reader | Retrieval Recall@5 | End-to-End EM | End-to-End F1 | No-Answer Accuracy |
