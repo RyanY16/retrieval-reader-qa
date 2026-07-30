@@ -1,0 +1,11 @@
+{
+  "model": "bert_baseline",
+  "dataset": "squad_v1",
+  "subset_fraction": 0.01,
+  "train_examples": 875,
+  "validation_examples": 105,
+  "train_time_sec": 336.0,
+  "inference_time_sec": 5.42,
+  "overall_em": 37.14,
+  "overall_f1": 48.38
+}

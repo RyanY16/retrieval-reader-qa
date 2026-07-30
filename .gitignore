@@ -1,6 +1,7 @@
 .DS_Store
 __pycache__/
 .ipynb_checkpoints/
+outputs/logs/
 
 # Hugging Face trainer checkpoints that are too large for regular GitHub.
 outputs/reader_*_outputs/**/model.safetensors

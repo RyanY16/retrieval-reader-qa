@@ -1,0 +1,32 @@
+[
+  {
+    "model": "bert_baseline",
+    "dataset": "squad_v2",
+    "subset_fraction": 0.1,
+    "train_examples": 13031,
+    "validation_examples": 1187,
+    "train_time_sec": 7201.23,
+    "inference_time_sec": 79.05,
+    "overall_em": 58.21,
+    "overall_f1": 61.69,
+    "answerability_accuracy": 68.32,
+    "answerability_precision": 65.83,
+    "answerability_recall": 75.63,
+    "answerability_f1": 70.39
+  },
+  {
+    "model": "bert_drqa_attention",
+    "dataset": "squad_v2",
+    "subset_fraction": 0.1,
+    "train_examples": 13031,
+    "validation_examples": 1187,
+    "train_time_sec": 9318.63,
+    "inference_time_sec": 204.4,
+    "overall_em": 56.61,
+    "overall_f1": 60.61,
+    "answerability_accuracy": 67.65,
+    "answerability_precision": 64.04,
+    "answerability_recall": 79.86,
+    "answerability_f1": 71.08
+  }
+]

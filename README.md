@@ -36,14 +36,14 @@ This repository contains a small question-answering pipeline built around:
 
 The project separates question answering into two stages:
 
-1. Retrieval: passages are embedded with SentenceTransformers and indexed with FAISS. At query time, `src/document_retriever.py` embeds the question and searches `data/processed/passage_index.faiss`, using `data/processed/passages_metadata.pkl` to map retrieved ids back to passage titles and text.
+1. Retrieval: `src/build_squad_index.py` collects Wikipedia article titles from SQuAD, downloads the corresponding full article text through the Wikipedia API, splits each article into overlapping 200-word passages with a 20-word overlap, embeds those passages with SentenceTransformers, and indexes them with FAISS. At query time, `src/document_retriever.py` embeds the question and searches `data/processed/passage_index.faiss`, using `data/processed/passages_metadata.pkl` to map retrieved ids back to passage titles and text.
 2. Reading: the reader experiments use SQuAD v2 examples where the model receives a question and passage/context, then predicts an answer span or no-answer. `notebooks/reader_smoke_test.ipynb` verifies the full training/evaluation path on a tiny subset before running the larger setup in `notebooks/reader_1pct_experiment.ipynb`.
 
 The 1% experiment compares a BERT baseline reader with a BERT reader variant that adds DrQA-style attention. Training metadata and checkpoint configuration files are saved under `outputs/reader_1pct_outputs/`, while the resulting plot is stored at `reports/figures/reader_results.png`.
 
 The end-to-end implementation is in `src/qa_pipeline.py`: it takes a question, retrieves the most relevant passages from the FAISS index, runs the BERT reader over those passages, and returns either the best answer span or no answer.
 
-For the fair project evaluation, the retrieval index should be built from the same SQuAD split being tested. `src/build_squad_index.py` creates a 500-context SQuAD v2 validation index, and `src/evaluate_pipeline.py` tests retrieval recall plus end-to-end answer quality on questions from that same split.
+For the fair project evaluation, the retrieval index should be built from Wikipedia articles referenced by the same SQuAD split being tested. `src/build_squad_index.py` creates a chunked article index from up to 500 SQuAD-referenced Wikipedia pages, and `src/evaluate_pipeline.py` tests retrieval recall plus end-to-end answer quality on questions from that same split.
 
 ## Usage
 
@@ -95,11 +95,19 @@ TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_
 TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_THREADS=1 python3 src/train_reader.py --dataset squad_v1 --subset-fraction 0.05 --model-kind all --skip-save-model
 ```
 
-Build the fair SQuAD evaluation index:
+Build the fair SQuAD evaluation index from Wikipedia articles:
 
 ```bash
 python3 src/build_squad_index.py --max-documents 500
 ```
+
+For a faster debugging run, build a tiny article index in a separate directory:
+
+```bash
+python3 src/build_squad_index.py --max-documents 5 --output-dir data/wiki_smoke
+```
+
+To reproduce the older SQuAD-context-only setup, add `--use-squad-contexts`.
 
 Evaluate retrieval and answer extraction on that matching SQuAD index:
 
@@ -111,7 +119,7 @@ TOKENIZERS_PARALLELISM=false OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 VECLIB_MAXIMUM_
 
 All reader-only SQuAD results are saved in `reports/all_reader_results.md`.
 
-These results use `rajpurkar/squad_v2`, the first 500 unique validation contexts as the retrieval collection, and the first 100 validation questions for evaluation.
+The end-to-end results below were produced before the retrieval corpus was changed to full Wikipedia articles. They use `rajpurkar/squad_v2`, the first 500 unique validation contexts as the retrieval collection, and the first 100 validation questions for evaluation. Rebuild the article index and rerun `src/evaluate_pipeline.py` before reporting final end-to-end retrieval numbers.
 
 | Reader | Retrieval Recall@5 | End-to-End EM | End-to-End F1 | No-Answer Accuracy |
 | --- | ---: | ---: | ---: | ---: |

@@ -1,0 +1,11 @@
+{
+  "model": "bert_drqa_attention",
+  "dataset": "squad_v1",
+  "subset_fraction": 0.1,
+  "train_examples": 8759,
+  "validation_examples": 1057,
+  "train_time_sec": 5041.53,
+  "inference_time_sec": 74.21,
+  "overall_em": 69.06,
+  "overall_f1": 79.44
+}

@@ -1,9 +1,11 @@
 # Evaluation Results
 
+Note: the end-to-end retrieval results in this section were produced with the earlier SQuAD-context retrieval index. The current corpus builder now downloads full Wikipedia articles referenced by SQuAD and chunks them into passages before indexing. Rebuild the article index and rerun evaluation before using final end-to-end numbers in the report.
+
 Evaluation setup:
 
 - Dataset: `rajpurkar/squad_v2`
-- Retrieval collection: first 500 unique validation contexts
+- Retrieval collection: first 500 unique validation contexts from the previous setup
 - Evaluation sample: first 100 validation questions
 - Retrieval: SentenceTransformers + FAISS, top 5 passages
 - Readers: BERT baseline and BERT + DrQA-style attention

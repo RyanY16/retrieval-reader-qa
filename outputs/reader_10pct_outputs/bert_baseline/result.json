@@ -1,0 +1,15 @@
+{
+  "model": "bert_baseline",
+  "dataset": "squad_v2",
+  "subset_fraction": 0.1,
+  "train_examples": 13031,
+  "validation_examples": 1187,
+  "train_time_sec": 7201.23,
+  "inference_time_sec": 79.05,
+  "overall_em": 58.21,
+  "overall_f1": 61.69,
+  "answerability_accuracy": 68.32,
+  "answerability_precision": 65.83,
+  "answerability_recall": 75.63,
+  "answerability_f1": 70.39
+}

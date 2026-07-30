@@ -4,6 +4,7 @@ evaluate
 faiss-cpu
 numpy
 pandas
+requests
 sentence-transformers
 torch
 transformers

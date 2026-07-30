@@ -1,0 +1,722 @@
+[
+  {
+    "dataset": "SQuAD v2 75 answerable / 25 unanswerable",
+    "index": "data/processed",
+    "index_articles": 481,
+    "index_passage_chunks": 23286,
+    "sample_total": 100,
+    "answerable": 75,
+    "unanswerable": 25,
+    "top_k": 5,
+    "reader": "1% BERT baseline",
+    "model": "bert_baseline",
+    "checkpoint": "outputs/reader_squad_v2_1pct_saved_outputs/bert_baseline/final",
+    "retrieval_recall": 0.56,
+    "retrieval_hits": 42,
+    "answerable_total": 75,
+    "best_by_f1": {
+      "threshold": 0,
+      "em": 0.28,
+      "f1": 0.29035714285714287,
+      "answerable_em": 0.05333333333333334,
+      "answerable_f1": 0.06714285714285714,
+      "no_answer_accuracy": 0.96
+    },
+    "all_thresholds": [
+      {
+        "threshold": -2,
+        "em": 0.26,
+        "f1": 0.26,
+        "answerable_em": 0.013333333333333334,
+        "answerable_f1": 0.013333333333333334,
+        "no_answer_accuracy": 1.0
+      },
+      {
+        "threshold": -1,
+        "em": 0.27,
+        "f1": 0.27,
+        "answerable_em": 0.02666666666666667,
+        "answerable_f1": 0.02666666666666667,
+        "no_answer_accuracy": 1.0
+      },
+      {
+        "threshold": 0,
+        "em": 0.28,
+        "f1": 0.29035714285714287,
+        "answerable_em": 0.05333333333333334,
+        "answerable_f1": 0.06714285714285714,
+        "no_answer_accuracy": 0.96
+      },
+      {
+        "threshold": 1,
+        "em": 0.22,
+        "f1": 0.23035714285714284,
+        "answerable_em": 0.08,
+        "answerable_f1": 0.0938095238095238,
+        "no_answer_accuracy": 0.64
+      },
+      {
+        "threshold": 2,
+        "em": 0.22,
+        "f1": 0.23914682539682539,
+        "answerable_em": 0.10666666666666667,
+        "answerable_f1": 0.1321957671957672,
+        "no_answer_accuracy": 0.56
+      },
+      {
+        "threshold": 3,
+        "em": 0.17,
+        "f1": 0.19039682539682537,
+        "answerable_em": 0.12,
+        "answerable_f1": 0.14719576719576716,
+        "no_answer_accuracy": 0.32
+      },
+      {
+        "threshold": 4,
+        "em": 0.16,
+        "f1": 0.1803968253968254,
+        "answerable_em": 0.12,
+        "answerable_f1": 0.14719576719576716,
+        "no_answer_accuracy": 0.28
+      },
+      {
+        "threshold": 5,
+        "em": 0.1,
+        "f1": 0.12039682539682538,
+        "answerable_em": 0.12,
+        "answerable_f1": 0.14719576719576716,
+        "no_answer_accuracy": 0.04
+      }
+    ],
+    "reader_time_sec": 495.4
+  },
+  {
+    "dataset": "SQuAD v2 75 answerable / 25 unanswerable",
+    "index": "data/processed",
+    "index_articles": 481,
+    "index_passage_chunks": 23286,
+    "sample_total": 100,
+    "answerable": 75,
+    "unanswerable": 25,
+    "top_k": 5,
+    "reader": "1% Attention-augmented BERT",
+    "model": "bert_drqa_attention",
+    "checkpoint": "outputs/reader_squad_v2_1pct_saved_outputs/bert_drqa_attention/final",
+    "retrieval_recall": 0.56,
+    "retrieval_hits": 42,
+    "answerable_total": 75,
+    "best_by_f1": {
+      "threshold": 1,
+      "em": 0.28,
+      "f1": 0.284,
+      "answerable_em": 0.08,
+      "answerable_f1": 0.08533333333333334,
+      "no_answer_accuracy": 0.88
+    },
+    "all_thresholds": [
+      {
+        "threshold": -2,
+        "em": 0.25,
+        "f1": 0.25,
+        "answerable_em": 0.0,
+        "answerable_f1": 0.0,
+        "no_answer_accuracy": 1.0
+      },
+      {
+        "threshold": -1,
+        "em": 0.25,
+        "f1": 0.25,
+        "answerable_em": 0.0,
+        "answerable_f1": 0.0,
+        "no_answer_accuracy": 1.0
+      },
+      {
+        "threshold": 0,
+        "em": 0.27,
+        "f1": 0.27,
+        "answerable_em": 0.04,
+        "answerable_f1": 0.04,
+        "no_answer_accuracy": 0.96
+      },
+      {
+        "threshold": 1,
+        "em": 0.28,
+        "f1": 0.284,
+        "answerable_em": 0.08,
+        "answerable_f1": 0.08533333333333334,
+        "no_answer_accuracy": 0.88
+      },
+      {
+        "threshold": 2,
+        "em": 0.26,
+        "f1": 0.2723333333333333,
+        "answerable_em": 0.10666666666666667,
+        "answerable_f1": 0.12311111111111113,
+        "no_answer_accuracy": 0.72
+      },
+      {
+        "threshold": 3,
+        "em": 0.24,
+        "f1": 0.25233333333333335,
+        "answerable_em": 0.10666666666666667,
+        "answerable_f1": 0.12311111111111113,
+        "no_answer_accuracy": 0.64
+      },
+      {
+        "threshold": 4,
+        "em": 0.18,
+        "f1": 0.19643589743589743,
+        "answerable_em": 0.10666666666666667,
+        "answerable_f1": 0.12858119658119657,
+        "no_answer_accuracy": 0.4
+      },
+      {
+        "threshold": 5,
+        "em": 0.14,
+        "f1": 0.16310256410256407,
+        "answerable_em": 0.10666666666666667,
+        "answerable_f1": 0.13747008547008546,
+        "no_answer_accuracy": 0.24
+      }
+    ],
+    "reader_time_sec": 613.6
+  },
+  {
+    "dataset": "SQuAD v2 75 answerable / 25 unanswerable",
+    "index": "data/processed",
+    "index_articles": 481,
+    "index_passage_chunks": 23286,
+    "sample_total": 100,
+    "answerable": 75,
+    "unanswerable": 25,
+    "top_k": 5,
+    "reader": "5% BERT baseline",
+    "model": "bert_baseline",
+    "checkpoint": "outputs/reader_5pct_outputs/bert_baseline/final",
+    "retrieval_recall": 0.56,
+    "retrieval_hits": 42,
+    "answerable_total": 75,
+    "best_by_f1": {
+      "threshold": -1,
+      "em": 0.37,
+      "f1": 0.3766666666666667,
+      "answerable_em": 0.18666666666666668,
+      "answerable_f1": 0.19555555555555557,
+      "no_answer_accuracy": 0.92
+    },
+    "all_thresholds": [
+      {
+        "threshold": -2,
+        "em": 0.35,
+        "f1": 0.35333333333333333,
+        "answerable_em": 0.16,
+        "answerable_f1": 0.16444444444444445,
+        "no_answer_accuracy": 0.92
+      },
+      {
+        "threshold": -1,
+        "em": 0.37,
+        "f1": 0.3766666666666667,
+        "answerable_em": 0.18666666666666668,
+        "answerable_f1": 0.19555555555555557,
+        "no_answer_accuracy": 0.92
+      },
+      {
+        "threshold": 0,
+        "em": 0.37,
+        "f1": 0.3766666666666667,
+        "answerable_em": 0.22666666666666666,
+        "answerable_f1": 0.23555555555555557,
+        "no_answer_accuracy": 0.8
+      },
+      {
+        "threshold": 1,
+        "em": 0.34,
+        "f1": 0.34666666666666673,
+        "answerable_em": 0.22666666666666666,
+        "answerable_f1": 0.23555555555555557,
+        "no_answer_accuracy": 0.68
+      },
+      {
+        "threshold": 2,
+        "em": 0.3,
+        "f1": 0.3120952380952381,
+        "answerable_em": 0.24,
+        "answerable_f1": 0.2561269841269841,
+        "no_answer_accuracy": 0.48
+      },
+      {
+        "threshold": 3,
+        "em": 0.28,
+        "f1": 0.2920952380952381,
+        "answerable_em": 0.25333333333333335,
+        "answerable_f1": 0.26946031746031746,
+        "no_answer_accuracy": 0.36
+      },
+      {
+        "threshold": 4,
+        "em": 0.26,
+        "f1": 0.2720952380952381,
+        "answerable_em": 0.25333333333333335,
+        "answerable_f1": 0.26946031746031746,
+        "no_answer_accuracy": 0.28
+      },
+      {
+        "threshold": 5,
+        "em": 0.25,
+        "f1": 0.2620952380952381,
+        "answerable_em": 0.28,
+        "answerable_f1": 0.2961269841269841,
+        "no_answer_accuracy": 0.16
+      }
+    ],
+    "reader_time_sec": 432.1
+  },
+  {
+    "dataset": "SQuAD v2 75 answerable / 25 unanswerable",
+    "index": "data/processed",
+    "index_articles": 481,
+    "index_passage_chunks": 23286,
+    "sample_total": 100,
+    "answerable": 75,
+    "unanswerable": 25,
+    "top_k": 5,
+    "reader": "5% Attention-augmented BERT",
+    "model": "bert_drqa_attention",
+    "checkpoint": "outputs/reader_5pct_outputs/bert_drqa_attention/final",
+    "retrieval_recall": 0.56,
+    "retrieval_hits": 42,
+    "answerable_total": 75,
+    "best_by_f1": {
+      "threshold": -2,
+      "em": 0.36,
+      "f1": 0.37833333333333335,
+      "answerable_em": 0.18666666666666668,
+      "answerable_f1": 0.2111111111111111,
+      "no_answer_accuracy": 0.88
+    },
+    "all_thresholds": [
+      {
+        "threshold": -2,
+        "em": 0.36,
+        "f1": 0.37833333333333335,
+        "answerable_em": 0.18666666666666668,
+        "answerable_f1": 0.2111111111111111,
+        "no_answer_accuracy": 0.88
+      },
+      {
+        "threshold": -1,
+        "em": 0.33,
+        "f1": 0.35233333333333333,
+        "answerable_em": 0.18666666666666668,
+        "answerable_f1": 0.21644444444444447,
+        "no_answer_accuracy": 0.76
+      },
+      {
+        "threshold": 0,
+        "em": 0.33,
+        "f1": 0.359,
+        "answerable_em": 0.18666666666666668,
+        "answerable_f1": 0.2253333333333333,
+        "no_answer_accuracy": 0.76
+      },
+      {
+        "threshold": 1,
+        "em": 0.32,
+        "f1": 0.35233333333333333,
+        "answerable_em": 0.2,
+        "answerable_f1": 0.24311111111111108,
+        "no_answer_accuracy": 0.68
+      },
+      {
+        "threshold": 2,
+        "em": 0.3,
+        "f1": 0.3363333333333333,
+        "answerable_em": 0.21333333333333335,
+        "answerable_f1": 0.2617777777777778,
+        "no_answer_accuracy": 0.56
+      },
+      {
+        "threshold": 3,
+        "em": 0.27,
+        "f1": 0.30633333333333335,
+        "answerable_em": 0.21333333333333335,
+        "answerable_f1": 0.2617777777777778,
+        "no_answer_accuracy": 0.44
+      },
+      {
+        "threshold": 4,
+        "em": 0.28,
+        "f1": 0.31633333333333336,
+        "answerable_em": 0.22666666666666666,
+        "answerable_f1": 0.2751111111111111,
+        "no_answer_accuracy": 0.44
+      },
+      {
+        "threshold": 5,
+        "em": 0.23,
+        "f1": 0.2663333333333333,
+        "answerable_em": 0.22666666666666666,
+        "answerable_f1": 0.2751111111111111,
+        "no_answer_accuracy": 0.24
+      }
+    ],
+    "reader_time_sec": 410.3
+  },
+  {
+    "dataset": "SQuAD v2 75 answerable / 25 unanswerable",
+    "index": "data/processed",
+    "index_articles": 481,
+    "index_passage_chunks": 23286,
+    "sample_total": 100,
+    "answerable": 75,
+    "unanswerable": 25,
+    "top_k": 5,
+    "reader": "10% BERT baseline",
+    "model": "bert_baseline",
+    "checkpoint": "outputs/reader_10pct_outputs/bert_baseline/final",
+    "retrieval_recall": 0.56,
+    "retrieval_hits": 42,
+    "answerable_total": 75,
+    "best_by_f1": {
+      "threshold": -2,
+      "em": 0.36,
+      "f1": 0.3783333333333333,
+      "answerable_em": 0.18666666666666668,
+      "answerable_f1": 0.21111111111111108,
+      "no_answer_accuracy": 0.88
+    },
+    "all_thresholds": [
+      {
+        "threshold": -2,
+        "em": 0.36,
+        "f1": 0.3783333333333333,
+        "answerable_em": 0.18666666666666668,
+        "answerable_f1": 0.21111111111111108,
+        "no_answer_accuracy": 0.88
+      },
+      {
+        "threshold": -1,
+        "em": 0.34,
+        "f1": 0.3583333333333333,
+        "answerable_em": 0.18666666666666668,
+        "answerable_f1": 0.21111111111111108,
+        "no_answer_accuracy": 0.8
+      },
+      {
+        "threshold": 0,
+        "em": 0.33,
+        "f1": 0.3483333333333333,
+        "answerable_em": 0.2,
+        "answerable_f1": 0.22444444444444442,
+        "no_answer_accuracy": 0.72
+      },
+      {
+        "threshold": 1,
+        "em": 0.35,
+        "f1": 0.3683333333333333,
+        "answerable_em": 0.25333333333333335,
+        "answerable_f1": 0.27777777777777773,
+        "no_answer_accuracy": 0.64
+      },
+      {
+        "threshold": 2,
+        "em": 0.33,
+        "f1": 0.35455555555555557,
+        "answerable_em": 0.25333333333333335,
+        "answerable_f1": 0.2860740740740741,
+        "no_answer_accuracy": 0.56
+      },
+      {
+        "threshold": 3,
+        "em": 0.32,
+        "f1": 0.34455555555555556,
+        "answerable_em": 0.26666666666666666,
+        "answerable_f1": 0.2994074074074074,
+        "no_answer_accuracy": 0.48
+      },
+      {
+        "threshold": 4,
+        "em": 0.3,
+        "f1": 0.32455555555555554,
+        "answerable_em": 0.26666666666666666,
+        "answerable_f1": 0.2994074074074074,
+        "no_answer_accuracy": 0.4
+      },
+      {
+        "threshold": 5,
+        "em": 0.28,
+        "f1": 0.31122222222222223,
+        "answerable_em": 0.26666666666666666,
+        "answerable_f1": 0.3082962962962963,
+        "no_answer_accuracy": 0.32
+      }
+    ],
+    "reader_time_sec": 402.9
+  },
+  {
+    "dataset": "SQuAD v2 75 answerable / 25 unanswerable",
+    "index": "data/processed",
+    "index_articles": 481,
+    "index_passage_chunks": 23286,
+    "sample_total": 100,
+    "answerable": 75,
+    "unanswerable": 25,
+    "top_k": 5,
+    "reader": "10% Attention-augmented BERT",
+    "model": "bert_drqa_attention",
+    "checkpoint": "outputs/reader_10pct_outputs/bert_drqa_attention/final",
+    "retrieval_recall": 0.56,
+    "retrieval_hits": 42,
+    "answerable_total": 75,
+    "best_by_f1": {
+      "threshold": -1,
+      "em": 0.37,
+      "f1": 0.3866666666666667,
+      "answerable_em": 0.21333333333333335,
+      "answerable_f1": 0.23555555555555557,
+      "no_answer_accuracy": 0.84
+    },
+    "all_thresholds": [
+      {
+        "threshold": -2,
+        "em": 0.36,
+        "f1": 0.37,
+        "answerable_em": 0.2,
+        "answerable_f1": 0.21333333333333335,
+        "no_answer_accuracy": 0.84
+      },
+      {
+        "threshold": -1,
+        "em": 0.37,
+        "f1": 0.3866666666666667,
+        "answerable_em": 0.21333333333333335,
+        "answerable_f1": 0.23555555555555557,
+        "no_answer_accuracy": 0.84
+      },
+      {
+        "threshold": 0,
+        "em": 0.35,
+        "f1": 0.3666666666666667,
+        "answerable_em": 0.21333333333333335,
+        "answerable_f1": 0.23555555555555557,
+        "no_answer_accuracy": 0.76
+      },
+      {
+        "threshold": 1,
+        "em": 0.3,
+        "f1": 0.31666666666666665,
+        "answerable_em": 0.21333333333333335,
+        "answerable_f1": 0.23555555555555557,
+        "no_answer_accuracy": 0.56
+      },
+      {
+        "threshold": 2,
+        "em": 0.29,
+        "f1": 0.3066666666666667,
+        "answerable_em": 0.22666666666666666,
+        "answerable_f1": 0.2488888888888889,
+        "no_answer_accuracy": 0.48
+      },
+      {
+        "threshold": 3,
+        "em": 0.3,
+        "f1": 0.3188888888888889,
+        "answerable_em": 0.24,
+        "answerable_f1": 0.2651851851851852,
+        "no_answer_accuracy": 0.48
+      },
+      {
+        "threshold": 4,
+        "em": 0.29,
+        "f1": 0.3088888888888889,
+        "answerable_em": 0.25333333333333335,
+        "answerable_f1": 0.2785185185185185,
+        "no_answer_accuracy": 0.4
+      },
+      {
+        "threshold": 5,
+        "em": 0.27,
+        "f1": 0.2911111111111111,
+        "answerable_em": 0.25333333333333335,
+        "answerable_f1": 0.2814814814814815,
+        "no_answer_accuracy": 0.32
+      }
+    ],
+    "reader_time_sec": 427.6
+  },
+  {
+    "dataset": "SQuAD 1.1 validation[:100]",
+    "index": "data/processed",
+    "index_articles": 481,
+    "index_passage_chunks": 23286,
+    "sample_total": 100,
+    "answerable": 100,
+    "unanswerable": 0,
+    "top_k": 5,
+    "reader": "1% BERT baseline",
+    "model": "bert_baseline",
+    "checkpoint": "outputs/reader_squad_v1_1pct_saved_outputs/bert_baseline/final",
+    "retrieval_recall": 0.96,
+    "retrieval_hits": 96,
+    "answerable_total": 100,
+    "best_by_f1": {
+      "threshold": 1000000000.0,
+      "em": 0.14,
+      "f1": 0.17223232323232324,
+      "answerable_em": 0.14,
+      "answerable_f1": 0.17223232323232324,
+      "no_answer_accuracy": null
+    },
+    "all_thresholds": [
+      {
+        "threshold": 1000000000.0,
+        "em": 0.14,
+        "f1": 0.17223232323232324,
+        "answerable_em": 0.14,
+        "answerable_f1": 0.17223232323232324,
+        "no_answer_accuracy": null
+      }
+    ],
+    "reader_time_sec": 356.7
+  },
+  {
+    "dataset": "SQuAD 1.1 validation[:100]",
+    "index": "data/processed",
+    "index_articles": 481,
+    "index_passage_chunks": 23286,
+    "sample_total": 100,
+    "answerable": 100,
+    "unanswerable": 0,
+    "top_k": 5,
+    "reader": "1% Attention-augmented BERT",
+    "model": "bert_drqa_attention",
+    "checkpoint": "outputs/reader_squad_v1_1pct_saved_outputs/bert_drqa_attention/final",
+    "retrieval_recall": 0.96,
+    "retrieval_hits": 96,
+    "answerable_total": 100,
+    "best_by_f1": {
+      "threshold": 1000000000.0,
+      "em": 0.17,
+      "f1": 0.19506851119894594,
+      "answerable_em": 0.17,
+      "answerable_f1": 0.19506851119894594,
+      "no_answer_accuracy": null
+    },
+    "all_thresholds": [
+      {
+        "threshold": 1000000000.0,
+        "em": 0.17,
+        "f1": 0.19506851119894594,
+        "answerable_em": 0.17,
+        "answerable_f1": 0.19506851119894594,
+        "no_answer_accuracy": null
+      }
+    ],
+    "reader_time_sec": 375.3
+  },
+  {
+    "dataset": "SQuAD 1.1 validation[:100]",
+    "index": "data/processed",
+    "index_articles": 481,
+    "index_passage_chunks": 23286,
+    "sample_total": 100,
+    "answerable": 100,
+    "unanswerable": 0,
+    "top_k": 5,
+    "reader": "5% BERT baseline",
+    "model": "bert_baseline",
+    "checkpoint": "outputs/reader_squad_v1_5pct_saved_outputs/bert_baseline/final",
+    "retrieval_recall": 0.96,
+    "retrieval_hits": 96,
+    "answerable_total": 100,
+    "best_by_f1": {
+      "threshold": 1000000000.0,
+      "em": 0.33,
+      "f1": 0.3587070707070707,
+      "answerable_em": 0.33,
+      "answerable_f1": 0.3587070707070707,
+      "no_answer_accuracy": null
+    },
+    "all_thresholds": [],
+    "reader_time_sec": 343.9
+  },
+  {
+    "dataset": "SQuAD 1.1 validation[:100]",
+    "index": "data/processed",
+    "index_articles": 481,
+    "index_passage_chunks": 23286,
+    "sample_total": 100,
+    "answerable": 100,
+    "unanswerable": 0,
+    "top_k": 5,
+    "reader": "5% Attention-augmented BERT",
+    "model": "bert_drqa_attention",
+    "checkpoint": "outputs/reader_squad_v1_5pct_saved_outputs/bert_drqa_attention/final",
+    "retrieval_recall": 0.96,
+    "retrieval_hits": 96,
+    "answerable_total": 100,
+    "best_by_f1": {
+      "threshold": 1000000000.0,
+      "em": 0.41,
+      "f1": 0.44857808857808856,
+      "answerable_em": 0.41,
+      "answerable_f1": 0.44857808857808856,
+      "no_answer_accuracy": null
+    },
+    "all_thresholds": [],
+    "reader_time_sec": 349.3
+  },
+  {
+    "dataset": "SQuAD 1.1 validation[:100]",
+    "index": "data/processed",
+    "index_articles": 481,
+    "index_passage_chunks": 23286,
+    "sample_total": 100,
+    "answerable": 100,
+    "unanswerable": 0,
+    "top_k": 5,
+    "reader": "10% BERT baseline",
+    "model": "bert_baseline",
+    "checkpoint": "outputs/reader_squad_v1_10pct_saved_outputs/bert_baseline/final",
+    "retrieval_recall": 0.96,
+    "retrieval_hits": 96,
+    "answerable_total": 100,
+    "best_by_f1": {
+      "threshold": 1000000000.0,
+      "em": 0.4,
+      "f1": 0.4341764705882353,
+      "answerable_em": 0.4,
+      "answerable_f1": 0.4341764705882353,
+      "no_answer_accuracy": null
+    },
+    "all_thresholds": [],
+    "reader_time_sec": 51.8
+  },
+  {
+    "dataset": "SQuAD 1.1 validation[:100]",
+    "index": "data/processed",
+    "index_articles": 481,
+    "index_passage_chunks": 23286,
+    "sample_total": 100,
+    "answerable": 100,
+    "unanswerable": 0,
+    "top_k": 5,
+    "reader": "10% Attention-augmented BERT",
+    "model": "bert_drqa_attention",
+    "checkpoint": "outputs/reader_squad_v1_10pct_saved_outputs/bert_drqa_attention/final",
+    "retrieval_recall": 0.96,
+    "retrieval_hits": 96,
+    "answerable_total": 100,
+    "best_by_f1": {
+      "threshold": 1000000000.0,
+      "em": 0.44,
+      "f1": 0.4752222222222222,
+      "answerable_em": 0.44,
+      "answerable_f1": 0.4752222222222222,
+      "no_answer_accuracy": null
+    },
+    "all_thresholds": [],
+    "reader_time_sec": 52.3
+  }
+]
