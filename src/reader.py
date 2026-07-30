@@ -17,8 +17,8 @@ from transformers import (
 from transformers.modeling_outputs import QuestionAnsweringModelOutput
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_BASELINE_CHECKPOINT = PROJECT_ROOT / "outputs" / "reader_1pct_outputs" / "bert_baseline" / "checkpoint-332"
-DEFAULT_DRQA_CHECKPOINT = PROJECT_ROOT / "outputs" / "reader_1pct_outputs" / "bert_drqa_attention" / "checkpoint-332"
+DEFAULT_BASELINE_CHECKPOINT = PROJECT_ROOT / "outputs" / "reader_squad_v2_1pct_saved_outputs" / "bert_baseline" / "final"
+DEFAULT_DRQA_CHECKPOINT = PROJECT_ROOT / "outputs" / "reader_squad_v2_1pct_saved_outputs" / "bert_drqa_attention" / "final"
 DEFAULT_TOKENIZER_NAME = "bert-base-uncased"
 
 

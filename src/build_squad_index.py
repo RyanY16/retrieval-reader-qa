@@ -13,7 +13,7 @@ import requests
 
 from document_retriever import DEFAULT_MODEL_NAME, PROJECT_ROOT
 
-DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "data" / "squad_validation_500"
+DEFAULT_OUTPUT_DIR = PROJECT_ROOT / "data" / "processed"
 WIKIPEDIA_API_URL = "https://en.wikipedia.org/w/api.php"
 USER_AGENT = "NLP-QA-project/1.0 (https://example.local; educational use)"
 

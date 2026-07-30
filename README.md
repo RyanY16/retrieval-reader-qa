@@ -17,13 +17,10 @@ The project evaluates two settings:
 ```text
 .
 ├── data/
-│   ├── processed/                  # Main full-corpus retrieval index artifacts
-│   ├── squad_validation_500/       # SQuAD v2 validation article index
-│   └── squad_v1_validation_500/    # SQuAD 1.1 validation article index
-├── notebooks/                      # Early reader smoke tests and experiments
+│   └── processed/                  # Final 481-article full-corpus retrieval index
 ├── outputs/                        # Result JSON files and lightweight checkpoint metadata
 ├── reports/
-│   └── figures/                    # Result plots used in the final report
+│   └── figures/                    # Final result plots used in the report
 ├── requirements.txt
 └── src/
     ├── build_squad_index.py        # Build Wikipedia/SQuAD FAISS indexes
@@ -82,7 +79,7 @@ python3 src/build_squad_index.py \
   --dataset-name rajpurkar/squad_v2 \
   --split validation \
   --max-documents 500 \
-  --output-dir data/squad_validation_500
+  --output-dir data/processed
 ```
 
 By default, articles are split into 200-word chunks with a 20-word overlap. You can change this:
@@ -94,7 +91,7 @@ python3 src/build_squad_index.py \
   --max-documents 500 \
   --chunk-words 150 \
   --overlap-words 30 \
-  --output-dir data/squad_validation_500
+  --output-dir data/processed
 ```
 
 Build a small smoke-test index:
@@ -171,7 +168,7 @@ OMP_NUM_THREADS=1 \
 MKL_NUM_THREADS=1 \
 VECLIB_MAXIMUM_THREADS=1 \
 python3 src/evaluate_pipeline.py \
-  --data-dir data/squad_validation_500 \
+  --data-dir data/processed \
   --dataset-name rajpurkar/squad_v2 \
   --split validation \
   --sample-size 100 \
@@ -188,7 +185,7 @@ OMP_NUM_THREADS=1 \
 MKL_NUM_THREADS=1 \
 VECLIB_MAXIMUM_THREADS=1 \
 python3 src/evaluate_pipeline.py \
-  --data-dir data/squad_validation_500 \
+  --data-dir data/processed \
   --dataset-name rajpurkar/squad_v2 \
   --split validation \
   --sample-size 100 \
@@ -197,7 +194,7 @@ python3 src/evaluate_pipeline.py \
   --reader-checkpoint outputs/reader_squad_v2_1pct_saved_outputs/bert_drqa_attention/final
 ```
 
-Evaluate SQuAD 1.1 with its matching index:
+Evaluate SQuAD 1.1 with the same full-corpus index:
 
 ```bash
 TOKENIZERS_PARALLELISM=false \
@@ -205,7 +202,7 @@ OMP_NUM_THREADS=1 \
 MKL_NUM_THREADS=1 \
 VECLIB_MAXIMUM_THREADS=1 \
 python3 src/evaluate_pipeline.py \
-  --data-dir data/squad_v1_validation_500 \
+  --data-dir data/processed \
   --dataset-name rajpurkar/squad \
   --split validation \
   --sample-size 100 \
